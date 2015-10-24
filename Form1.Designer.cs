@@ -64,7 +64,7 @@
             this.CB_Info.Name = "CB_Info";
             this.CB_Info.Size = new System.Drawing.Size(190, 21);
             this.CB_Info.TabIndex = 2;
-            this.CB_Info.SelectedIndexChanged += new System.EventHandler(this.changeEntry);
+            this.CB_Info.SelectedIndexChanged += new System.EventHandler(this.changeItem);
             // 
             // NUD_Value
             // 

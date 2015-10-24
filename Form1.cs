@@ -115,7 +115,7 @@ namespace ZTFH_SE
 
         private void Menu_Save_Click(object sender, EventArgs e)
         {
-            setEntry();
+            setItem();
             sav.Rupees = (ushort)NUD_Rupees.Value;
             sav.PlayerName = TB_PlayerName.Text;
             byte[] data = sav.Write();
@@ -172,29 +172,27 @@ namespace ZTFH_SE
 
             NUD_Rupees.Value = sav.Rupees;
             TB_PlayerName.Text = sav.PlayerName;
-            entry = -1;
+            offset = -1;
             CB_Info.SelectedIndex = 0;
-            loadEntry();
+            getItem();
             GB_Save.Enabled = Menu_Save.Enabled = Menu_Tools.Enabled = true;
         }
-        private int entry = -1;
-        private void changeEntry(object sender, EventArgs e)
+        private int offset = -1;
+        private void changeItem(object sender, EventArgs e)
         {
-            setEntry();
-            loadEntry();
+            setItem();
+            getItem();
         }
-        private void setEntry()
+        private void setItem()
         {
-            if (entry == -1)
+            if (offset == -1)
                 return;
-            int offset = entry;
             sav.Data[offset] = (byte)NUD_Value.Value;
         }
-        private void loadEntry()
+        private void getItem()
         {
-            int offset = getIndex(CB_Info);
+            offset = getIndex(CB_Info);
             NUD_Value.Value = sav.Data[offset];
-            entry = offset;
         }
 
         private void Menu_GiveAll_Click(object sender, EventArgs e)
