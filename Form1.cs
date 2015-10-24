@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace ZTFH_SE
@@ -87,37 +87,33 @@ namespace ZTFH_SE
         public Form1()
         {
             InitializeComponent();
+            DragEnter += tabMain_DragEnter;
+            DragDrop += tabMain_DragDrop;
 
             // Assemble items to edit
             CB_Info.ValueMember = "Value";
             CB_Info.DisplayMember = "Text";
-            List<object> dataSource = new List<object>();
-            foreach (string t in Editables)
-            {
-                string val = t.Split(' ')[0].Replace("0x", "");
-                int value = Convert.ToInt32(val, 16);
-                string text = t.Substring(val.Length + 3);
-                dataSource.Add(new
+            CB_Info.DataSource = (from t in Editables
+                let val = t.Split(' ')[0].Replace("0x", "")
+                select new cbItem
                 {
-                    Value = value,
-                    Text = text,
-                });
-            }
-            CB_Info.DataSource = dataSource;
+                    Value = Convert.ToInt32(val, 16), 
+                    Text = t.Substring(val.Length + 3),
+                }).OrderBy(d => d.Text).ToArray();
         }
-
-        internal static int getIndex(ComboBox cb)
+        // Drag & Drop Events
+        private void tabMain_DragEnter(object sender, DragEventArgs e)
         {
-            int val;
-            if (cb.SelectedValue == null) return 0;
-
-            try { val = int.Parse(cb.SelectedValue.ToString()); }
-            catch { val = cb.SelectedIndex; if (val < 0) val = 0; }
-
-            return val;
+            if (e.Data.GetDataPresent(DataFormats.FileDrop)) e.Effect = DragDropEffects.Copy;
+        }
+        private void tabMain_DragDrop(object sender, DragEventArgs e)
+        {
+            string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+            string path = files[0]; // open first D&D
+            openQuick(path);
         }
 
-        private void B_Save_Click(object sender, EventArgs e)
+        private void Menu_Save_Click(object sender, EventArgs e)
         {
             setEntry();
             sav.Rupees = (ushort)NUD_Rupees.Value;
@@ -138,9 +134,9 @@ namespace ZTFH_SE
             
             File.WriteAllBytes(path, data);
 
-            MessageBox.Show("Saved SAV to:" + Environment.NewLine + path);
+            Alert("Saved SAV to:" + Environment.NewLine + path);
         }
-        private void B_Open_Click(object sender, EventArgs e)
+        private void Menu_Open_Click(object sender, EventArgs e)
         {
             OpenFileDialog ofd = new OpenFileDialog
             {
@@ -152,12 +148,23 @@ namespace ZTFH_SE
             if (ofd.ShowDialog() != DialogResult.OK)
                 return;
 
-            string path = ofd.FileName;
-
+            openQuick(ofd.FileName);
+        }
+        private void Menu_About_Click(object sender, EventArgs e)
+        {
+            Alert("ZTFH_SE, by Kaphotics");
+        }
+        private void Menu_Exit_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
+        private void openQuick(string path)
+        {
             byte[] data = File.ReadAllBytes(path);
             if (data.Length != SAV.SIZE)
             {
-                MessageBox.Show("Invalid file size!");
+                Error("Invalid file size!", 
+                    String.Format("File size was 0x{0} bytes.", data.Length.ToString("X")));
                 return;
             }
 
@@ -165,11 +172,11 @@ namespace ZTFH_SE
 
             NUD_Rupees.Value = sav.Rupees;
             TB_PlayerName.Text = sav.PlayerName;
+            entry = -1;
             CB_Info.SelectedIndex = 0;
             loadEntry();
-            GB_Save.Enabled = B_Save.Enabled = true;
+            GB_Save.Enabled = Menu_Save.Enabled = Menu_Tools.Enabled = true;
         }
-
         private int entry = -1;
         private void changeEntry(object sender, EventArgs e)
         {
@@ -180,14 +187,71 @@ namespace ZTFH_SE
         {
             if (entry == -1)
                 return;
-            int offset = getIndex(CB_Info);
+            int offset = entry;
             sav.Data[offset] = (byte)NUD_Value.Value;
         }
         private void loadEntry()
         {
             int offset = getIndex(CB_Info);
             NUD_Value.Value = sav.Data[offset];
-            entry = CB_Info.SelectedIndex;
+            entry = offset;
+        }
+
+        private void Menu_GiveAll_Click(object sender, EventArgs e)
+        {
+            for (int i = 0; i < CB_Info.Items.Count; i++)
+            {
+                CB_Info.SelectedIndex = i;
+                if (!CB_Info.Text.Contains("Key Item"))
+                    NUD_Value.Value = NUD_Value.Maximum;
+            }
+            Alert("All Items have been set to 99 quantity.", "Key item counts have not been altered.");
+        }
+        private void Menu_RemoveAll_Click(object sender, EventArgs e)
+        {
+            for (int i = 0; i < CB_Info.Items.Count; i++)
+            {
+                CB_Info.SelectedIndex = i;
+                if (!CB_Info.Text.Contains("Key Item"))
+                    NUD_Value.Value = NUD_Value.Minimum;
+            }
+            Alert("All Items have been set to 99 quantity.", "Key item counts have not been altered.");
+        }
+
+        // Utility
+        public class cbItem
+        {
+            public string Text { get; set; }
+            public object Value { get; set; }
+        }
+        internal static int getIndex(ComboBox cb)
+        {
+            int val;
+            if (cb.SelectedValue == null) return 0;
+
+            try { val = int.Parse(cb.SelectedValue.ToString()); }
+            catch { val = cb.SelectedIndex; if (val < 0) val = 0; }
+
+            return val;
+        }
+        // Message Displays
+        internal static DialogResult Error(params string[] lines)
+        {
+            System.Media.SystemSounds.Exclamation.Play();
+            string msg = String.Join(Environment.NewLine + Environment.NewLine, lines);
+            return MessageBox.Show(msg, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+        internal static DialogResult Alert(params string[] lines)
+        {
+            System.Media.SystemSounds.Asterisk.Play();
+            string msg = String.Join(Environment.NewLine + Environment.NewLine, lines);
+            return MessageBox.Show(msg, "Alert", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        }
+        internal static DialogResult Prompt(MessageBoxButtons btn, params string[] lines)
+        {
+            System.Media.SystemSounds.Question.Play();
+            string msg = String.Join(Environment.NewLine + Environment.NewLine, lines);
+            return MessageBox.Show(msg, "Prompt", btn, MessageBoxIcon.Asterisk);
         }
     }
 }
