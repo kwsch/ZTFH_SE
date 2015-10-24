@@ -127,6 +127,8 @@ namespace ZTFH_SE
             SaveFileDialog sfd = new SaveFileDialog
             {
                 FileName = "SaveData.bin",
+                Filter = "|BIN File|*.bin" +
+                         "|All Files|*.*"
             };
 
             if (sfd.ShowDialog() != DialogResult.OK)
@@ -143,6 +145,8 @@ namespace ZTFH_SE
             OpenFileDialog ofd = new OpenFileDialog
             {
                 FileName = "SaveData.bin",
+                Filter = "|BIN File|*.bin" +
+                         "|All Files|*.*"
             };
 
             if (ofd.ShowDialog() != DialogResult.OK)
