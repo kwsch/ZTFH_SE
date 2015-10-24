@@ -80,7 +80,7 @@
             this.NUD_Value.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.NUD_Value.Location = new System.Drawing.Point(275, 19);
             this.NUD_Value.Maximum = new decimal(new int[] {
-            0,
+            255,
             0,
             0,
             0});
