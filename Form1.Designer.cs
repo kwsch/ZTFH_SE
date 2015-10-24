@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.B_Save = new System.Windows.Forms.Button();
             this.B_Open = new System.Windows.Forms.Button();
             this.CB_Info = new System.Windows.Forms.ComboBox();
@@ -148,11 +149,12 @@
             this.Controls.Add(this.B_Open);
             this.Controls.Add(this.B_Save);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "ZTFH_SE";
+            this.Text = "Tri Force Heroes Save Editor";
             ((System.ComponentModel.ISupportInitialize)(this.NUD_Value)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.NUD_Rupees)).EndInit();
             this.GB_Save.ResumeLayout(false);
