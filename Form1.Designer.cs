@@ -80,18 +80,13 @@
             this.NUD_Value.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.NUD_Value.Location = new System.Drawing.Point(275, 19);
             this.NUD_Value.Maximum = new decimal(new int[] {
-            255,
+            0,
             0,
             0,
             0});
             this.NUD_Value.Name = "NUD_Value";
             this.NUD_Value.Size = new System.Drawing.Size(50, 20);
             this.NUD_Value.TabIndex = 3;
-            this.NUD_Value.Value = new decimal(new int[] {
-            255,
-            0,
-            0,
-            0});
             // 
             // label1
             // 
@@ -107,18 +102,13 @@
             this.NUD_Rupees.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.NUD_Rupees.Location = new System.Drawing.Point(275, 45);
             this.NUD_Rupees.Maximum = new decimal(new int[] {
-            65535,
+            99999,
             0,
             0,
             0});
             this.NUD_Rupees.Name = "NUD_Rupees";
             this.NUD_Rupees.Size = new System.Drawing.Size(50, 20);
             this.NUD_Rupees.TabIndex = 5;
-            this.NUD_Rupees.Value = new decimal(new int[] {
-            65535,
-            0,
-            0,
-            0});
             // 
             // L_Rupees
             // 

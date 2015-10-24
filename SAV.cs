@@ -72,9 +72,9 @@ namespace ZTFH_SE
             return newSAV;
         }
 
-        public ushort Rupees
+        public uint Rupees
         {
-            get { return BitConverter.ToUInt16(Data, 0x2B0); }
+            get { return BitConverter.ToUInt32(Data, 0x2B0); }
             set { BitConverter.GetBytes(value).CopyTo(Data, 0x2B0); }
         }
     }
