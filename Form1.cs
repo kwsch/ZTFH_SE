@@ -127,7 +127,7 @@ namespace ZTFH_SE
             SaveFileDialog sfd = new SaveFileDialog
             {
                 FileName = "SaveData.bin",
-                Filter = "|BIN File|*.bin" +
+                Filter = "BIN File|*.bin" +
                          "|All Files|*.*"
             };
 
@@ -145,7 +145,7 @@ namespace ZTFH_SE
             OpenFileDialog ofd = new OpenFileDialog
             {
                 FileName = "SaveData.bin",
-                Filter = "|BIN File|*.bin" +
+                Filter = "BIN File|*.bin" +
                          "|All Files|*.*"
             };
 
