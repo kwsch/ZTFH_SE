@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Text;
 
 namespace ZTFH_SE
 {
@@ -76,6 +77,11 @@ namespace ZTFH_SE
         {
             get { return BitConverter.ToUInt32(Data, 0x2B0); }
             set { BitConverter.GetBytes(value).CopyTo(Data, 0x2B0); }
+        }
+        public string PlayerName
+        {
+            get { return Encoding.Unicode.GetString(Data, 0x330, 8*2); }
+            set { Encoding.Unicode.GetBytes(value.PadRight(8)).CopyTo(Data, 0x330); }
         }
     }
 }

@@ -37,6 +37,8 @@
             this.NUD_Rupees = new System.Windows.Forms.NumericUpDown();
             this.L_Rupees = new System.Windows.Forms.Label();
             this.GB_Save = new System.Windows.Forms.GroupBox();
+            this.TB_PlayerName = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.NUD_Value)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NUD_Rupees)).BeginInit();
             this.GB_Save.SuspendLayout();
@@ -127,6 +129,8 @@
             this.GB_Save.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.GB_Save.Controls.Add(this.label2);
+            this.GB_Save.Controls.Add(this.TB_PlayerName);
             this.GB_Save.Controls.Add(this.NUD_Value);
             this.GB_Save.Controls.Add(this.L_Rupees);
             this.GB_Save.Controls.Add(this.CB_Info);
@@ -139,6 +143,23 @@
             this.GB_Save.TabIndex = 7;
             this.GB_Save.TabStop = false;
             this.GB_Save.Text = "Save Edits";
+            // 
+            // TB_PlayerName
+            // 
+            this.TB_PlayerName.Location = new System.Drawing.Point(79, 43);
+            this.TB_PlayerName.MaxLength = 8;
+            this.TB_PlayerName.Name = "TB_PlayerName";
+            this.TB_PlayerName.Size = new System.Drawing.Size(100, 20);
+            this.TB_PlayerName.TabIndex = 7;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(3, 46);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(70, 13);
+            this.label2.TabIndex = 8;
+            this.label2.Text = "Player Name:";
             // 
             // Form1
             // 
@@ -173,6 +194,8 @@
         private System.Windows.Forms.NumericUpDown NUD_Rupees;
         private System.Windows.Forms.Label L_Rupees;
         private System.Windows.Forms.GroupBox GB_Save;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox TB_PlayerName;
     }
 }
 

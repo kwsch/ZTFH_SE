@@ -121,6 +121,7 @@ namespace ZTFH_SE
         {
             setEntry();
             sav.Rupees = (ushort)NUD_Rupees.Value;
+            sav.PlayerName = TB_PlayerName.Text;
             byte[] data = sav.Write();
 
             SaveFileDialog sfd = new SaveFileDialog
@@ -159,6 +160,7 @@ namespace ZTFH_SE
             sav = new SAV(data);
 
             NUD_Rupees.Value = sav.Rupees;
+            TB_PlayerName.Text = sav.PlayerName;
             CB_Info.SelectedIndex = 0;
             loadEntry();
             GB_Save.Enabled = B_Save.Enabled = true;
