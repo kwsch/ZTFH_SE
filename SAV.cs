@@ -59,7 +59,7 @@ namespace ZTFH_SE
             byte[] newSAV = (byte[])Data.Clone();
             byte[] r1 = Data.Skip(0x000).Take(0x1FC).ToArray();
             byte[] r2 = Data.Skip(0x200).Take(0x17FC).ToArray();
-            byte[] r3 = Data.Skip(0x200).Take(0x11FC).ToArray();
+            byte[] r3 = Data.Skip(0x1A00).Take(0x11FC).ToArray();
 
             uint r1crc = CHK.ComputeChecksum(r1);
             uint r2crc = CHK.ComputeChecksum(r2);
