@@ -80,8 +80,8 @@ namespace ZTFH_SE
         }
         public string PlayerName
         {
-            get { return Encoding.Unicode.GetString(Data, 0x330, 8*2); }
-            set { Encoding.Unicode.GetBytes(value.PadRight(8)).CopyTo(Data, 0x330); }
+            get { return Encoding.Unicode.GetString(Data, 0x330, 8*2).Trim(); }
+            set { Encoding.Unicode.GetBytes(value.Trim().PadRight(8, '\0')).CopyTo(Data, 0x330); }
         }
     }
 }
